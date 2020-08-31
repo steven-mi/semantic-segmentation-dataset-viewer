@@ -37,7 +37,6 @@ def get_all_images(path):
     return paths
 
 
-@st.cache
 def create_data_sidebar():
     # Reading class color CSV files
     st.sidebar.header("Data")
@@ -72,7 +71,6 @@ def create_data_sidebar():
     return class_color_dict, (image_paths, label_paths)
 
 
-@st.cache
 def create_class_color_checkboxes(class_color_dict):
     # Read CSV file
     st.sidebar.header("Classes")
@@ -94,7 +92,6 @@ def create_class_color_checkboxes(class_color_dict):
     return class_checkboxes, slider
 
 
-@st.cache
 def create_images_per_class(paths):
     classes_per_image = []
     for image_path, label_path in zip(*paths):

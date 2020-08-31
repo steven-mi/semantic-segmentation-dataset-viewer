@@ -11,3 +11,4 @@ streamlit run app.py
 
 ## TODO
 - Plots about distribution
+- Add cache
