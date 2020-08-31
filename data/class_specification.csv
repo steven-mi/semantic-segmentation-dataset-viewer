@@ -1,0 +1,56 @@
+,ClassColor,ClassName
+0,"255,0,0",Car 1
+1,"200,0,0",Car 2
+2,"150,0,0",Car 3
+3,"128,0,0",Car 4
+4,"182,89,6",Bicycle 1
+5,"150,50,4",Bicycle 2
+6,"90,30,1",Bicycle 3
+7,"90,30,30",Bicycle 4
+8,"204,153,255",Pedestrian 1
+9,"189,73,155",Pedestrian 2
+10,"239,89,191",Pedestrian 3
+11,"255,128,0",Truck 1
+12,"200,128,0",Truck 2
+13,"150,128,0",Truck 3
+14,"0,255,0",Small vehicles 1
+15,"0,200,0",Small vehicles 2
+16,"0,150,0",Small vehicles 3
+17,"0,128,255",Traffic signal 1
+18,"30,28,158",Traffic signal 2
+19,"60,28,100",Traffic signal 3
+20,"0,255,255",Traffic sign 1
+21,"30,220,220",Traffic sign 2
+22,"60,157,199",Traffic sign 3
+23,"255,255,0",Utility vehicle 1
+24,"255,255,200",Utility vehicle 2
+25,"233,100,0",Sidebars
+26,"110,110,0",Speed bumper
+27,"128,128,0",Curbstone
+28,"255,193,37",Solid line
+29,"64,0,64",Irrelevant signs
+30,"185,122,87",Road blocks
+31,"0,0,100",Tractor
+32,"139,99,108",Non-drivable street
+33,"210,50,115",Zebra crossing
+34,"255,0,128",Obstacles / trash
+35,"255,246,143",Poles
+36,"150,0,150",RD restricted area
+37,"204,255,153",Animals
+38,"238,162,173",Grid structure
+39,"33,44,177",Signal corpus
+40,"180,50,180",Drivable cobblestone
+41,"255,70,185",Electronic traffic
+42,"238,233,191",Slow drive area
+43,"147,253,194",Nature object
+44,"150,150,200",Parking area
+45,"180,150,200",Sidewalk
+46,"72,209,204",Ego car
+47,"200,125,210",Painted driv. instr.
+48,"159,121,238",Traffic guide obj.
+49,"128,0,255",Dashed line
+50,"255,0,255",RD normal street
+51,"135,206,255",Sky
+52,"241,230,255",Buildings
+53,"96,69,143",Blurred area
+54,"53,46,82","Rain dirt"""
