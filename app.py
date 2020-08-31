@@ -140,7 +140,7 @@ def main():
     image_list = marked["ImagePath"].tolist()
     label_list = marked["LabelPath"].tolist()
     selected_image = st.selectbox(
-        "Which image do you want to select?",
+        "Which image do you want to see?",
         image_list
     )
     create_overlay_image(selected_image, label_list[image_list.index(selected_image)], slider)
