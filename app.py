@@ -28,14 +28,16 @@ def rgb2hex(rgbstr):
 
 def get_all_images(path):
     paths = []
-    for (dirpath, _, filenames) in os.walk(path):
+    for (dirpath, _, filenames) in os.walk(path, topdown=False):
         for filename in filenames:
             if filename.endswith(".png") or filename.endswith(".jpg") or filename.endswith(".jpeg"):
                 temp = os.path.join(dirpath, filename)
                 paths.append(temp)
+    paths.sort()
     return paths
 
 
+@st.cache
 def create_data_sidebar():
     # Reading class color CSV files
     st.sidebar.header("Data")
@@ -70,9 +72,11 @@ def create_data_sidebar():
     return class_color_dict, (image_paths, label_paths)
 
 
+@st.cache
 def create_class_color_checkboxes(class_color_dict):
     # Read CSV file
     st.sidebar.header("Classes")
+    slider = st.sidebar.slider(label="Transparency", min_value=0.0, value=0.4, max_value=1.0, step=0.1)
 
     # put all needed information in a list
     class_checkboxes = []
@@ -87,40 +91,60 @@ def create_class_color_checkboxes(class_color_dict):
 
         # append everything to list
         class_checkboxes.append((box, class_color, class_color_dict[class_color]))
-    return class_checkboxes
+    return class_checkboxes, slider
 
 
-def create_images_per_class_dict(class_color_dict, paths):
-    images_per_class = {}
+@st.cache
+def create_images_per_class(paths):
+    classes_per_image = []
     for image_path, label_path in zip(*paths):
         label = Image.open(label_path)
         colors = label.convert('RGB').getcolors()
+
+        class_per_image = {}
         for _, color in colors:
             key = rgb_to_rgbstr(*color)
-            images_per_class[key] = images_per_class.get(key, []) + [image_path, label_path]
-    return images_per_class
+            class_per_image[key] = 1
+        class_per_image["ImagePath"] = image_path
+        class_per_image["LabelPath"] = label_path
+        classes_per_image.append(class_per_image)
+
+    classes_per_image_df = pd.DataFrame(classes_per_image)
+    return classes_per_image_df
+
+
+def create_overlay_image(image_path, label_path, alpha):
+    image = Image.open(image_path)
+    label = Image.open(label_path)
+
+    image = image.convert("RGBA")
+    label = label.convert("RGBA")
+
+    overlay = Image.blend(image, label, alpha)
+    st.image(overlay, use_column_width=True)
+    return overlay
 
 
 def main():
     class_color_dict, paths = create_data_sidebar()
-    class_checkboxes = create_class_color_checkboxes(class_color_dict)
-    # images_per_class = create_images_per_class_dict(class_color_dict, paths)
+    class_checkboxes, slider = create_class_color_checkboxes(class_color_dict)
+    classes_per_image_df = create_images_per_class(paths)
 
     # get all checked boxes
     marked_boxes = []
     for box, class_color, class_name in class_checkboxes:
         if box:
-            marked_boxes.append(box)
+            marked_boxes.append(class_color)
+    marked = classes_per_image_df[marked_boxes + ["ImagePath", "LabelPath"]].dropna()
 
-    # paths = []
-    # for _, class_color, class_name in marked_boxes:
-    #     paths = images_per_class[class_color]
+    image_list = marked["ImagePath"].tolist()
+    label_list = marked["LabelPath"].tolist()
+    selected_image = st.selectbox(
+        "Which image do you want to select?",
+        image_list
+    )
+    create_overlay_image(selected_image, label_list[image_list.index(selected_image)], slider)
 
-    image_path, label_path = paths[0][0], paths[0][1]
-    image = np.array(Image.open(image_path))
-    label = np.array(Image.open(label_path))
-    overlay = ((0.4 * image) + (1 * label)).astype("uint8")
-    st.image(overlay, use_column_width=True)
 
 if __name__ == '__main__':
     # Set title of app
@@ -129,11 +153,3 @@ if __name__ == '__main__':
     st.sidebar.title("Settings")
     # run main
     main()
-# # Creating for each image a list of available class list
-# classes_per_image_list = []
-# for image_path, label_path in zip(image_paths, label_paths):
-#     label = Image.open(label_path)
-#     colors = label.convert('RGB').getcolors()
-
-# st.markdown(image_paths[0])
-# st.image(Image.open(image_paths[0]), use_column_width=True)
