@@ -9,4 +9,5 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-
+## TODO
+- Plots about distribution
