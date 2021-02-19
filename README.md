@@ -9,6 +9,5 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## TODO
-- Plots about distribution
-- Add cache
+## License
+Apache 2.0, see [LICENSE](LICENSE)
