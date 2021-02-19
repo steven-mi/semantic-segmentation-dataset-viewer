@@ -91,7 +91,7 @@ def create_class_color_checkboxes(class_color_dict):
         class_checkboxes.append((box, class_color, class_color_dict[class_color]))
     return class_checkboxes, slider
 
-
+@st.cache(suppress_st_warning=True)
 def create_images_per_class(paths):
     classes_per_image = []
     for image_path, label_path in zip(*paths):
@@ -109,7 +109,7 @@ def create_images_per_class(paths):
     classes_per_image_df = pd.DataFrame(classes_per_image)
     return classes_per_image_df
 
-
+@st.cache(suppress_st_warning=True)
 def create_overlay_image(image_path, label_path, alpha):
     image = Image.open(image_path)
     label = Image.open(label_path)
